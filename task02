@@ -1,0 +1,23 @@
+!pip install  accelerate scipy safetensors
+!pip install  diffusers
+!pip install  transformers
+!pip install  Pillow 
+
+import torch
+from diffusers import StableDiffusionPipeline
+from PIL import Image
+from IPython.display import display
+
+#loading the model
+pipeline = StableDiffusionPipeline.from_pretrained(
+       "CompVis/stable-diffusion-v1-4", torch_dtype=torch.float16
+)
+
+#using the nvidia gpu
+pipeline = pipeline.to('cuda')
+
+prompt = input("enter the description of the image: ")
+
+image = pipeline(prompt=prompt).images[0]
+
+display(image)
